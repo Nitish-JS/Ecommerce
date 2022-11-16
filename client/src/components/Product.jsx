@@ -27,6 +27,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   background-color: #f5fbfd;
   position: relative;
   &:hover ${Info} {
@@ -61,27 +62,23 @@ const Icon = styled.div`
     transform: scale(1.2);
   }
 `;
-
+const Price = styled.p`
+  color: black;
+  text-align: center;
+`;
 const Product = ({ item }) => {
- 
-
   return (
     <Container>
       <Circle />
       <Image src={item.img} />
       <Info>
         <Icon>
-          <ShoppingCartOutlined />
-        </Icon>
-        <Icon>
           <Link to={`/product/${item._id}`}>
             <SearchOutlined />
           </Link>
         </Icon>
-        <Icon>
-          <FavoriteOutlined />
-        </Icon>
       </Info>
+      <Price>Price : ₹{item.price}</Price>
     </Container>
   );
 };

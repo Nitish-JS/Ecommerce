@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import { notifySuccess, notifyFailure, notifyInfo } from "../components/alert";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -67,14 +69,17 @@ const Error = styled.span`
   color: red;
 `;
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isFetching, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    login(dispatch, { username, password });
+  const handleClick = (event) => {
+    event.preventDefault();
+    if (email !== "" && password !== "") {
+      login(dispatch, { email, password });
+    } else {
+      notifyInfo("Enter Valid Credntails");
+    }
   };
 
   return (
@@ -84,7 +89,7 @@ const Login = () => {
         <Form>
           <Input
             placeholder="email"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           ></Input>
           <Input
             type="password"
@@ -103,6 +108,18 @@ const Login = () => {
           </Links>
         </Form>
       </Wrapper>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </Container>
   );
 };

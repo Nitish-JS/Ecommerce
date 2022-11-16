@@ -9,6 +9,8 @@ const productRoute = require("./routes/product");
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
+const razorRoute = require("./routes/razorpay");
+
 const cors = require("cors");
 app.use(cors());
 mongoose
@@ -25,7 +27,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/product", productRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/order", orderRoute);
-app.use("/api/checkout", stripeRoute);
+app.use("/api/checkout", razorRoute);
 
 app.listen(process.env.PORT || 8000, () => {
   console.log("server listening at port 8000");

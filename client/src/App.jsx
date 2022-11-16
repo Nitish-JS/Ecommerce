@@ -1,4 +1,5 @@
-import Cart from "./pages/Cart";
+import Cart from "./pages/CartCopy";
+// import Cart from "./pages/Cart";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";
@@ -11,6 +12,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Success from "./pages/Sucess";
+import OrderDetails from "./pages/orderDetails";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -37,6 +39,10 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
         </Route>
+        <Route path="/orderdetails/:id" >
+          <OrderDetails />
+        </Route>
+        {/* <Route path="/orderdetails/:id" element={<OrderDetails />} /> */}
       </Switch>
     </Router>
   );

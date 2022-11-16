@@ -52,8 +52,8 @@ const ImageContainer = styled.div`
   flex: 1;
 `;
 const Image = styled.img`
-  height: 80%;
-  width: 80%;
+  height: 90%;
+  width: 70%;
 `;
 const InfoContainer = styled.div`
   flex: 1;
@@ -104,7 +104,7 @@ const Slider = () => {
                 <Description>{item.desc}</Description>
                 <Link
                   style={{ textDecoration: "none", color: "black" }}
-                  to="/product"
+                  to="/products/men"
                 >
                   <Button>Shop Now</Button>
                 </Link>

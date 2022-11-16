@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { userRequest } from "../requestMethods";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { notifySuccess, notifyFailure, notifyInfo } from "../components/alert";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
@@ -59,18 +65,59 @@ const Links = styled.a`
 `;
 
 const Register = () => {
+  const history = useHistory();
+  // const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
+  const changeHandler = (e) => {
+    setUserData((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+    console.log(userData);
+  };
+  const submitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      console.log("user data : " + userData);
+      const res = await userRequest.post("auth/register", userData);
+      res && notifySuccess("Successfully Registered");
+      history.push("/");
+    } catch (err) {
+      notifyFailure(err);
+    }
+  };
   return (
     <Container>
       <Wrapper>
         <Title>Create An Account</Title>
-        <Form >
-          <Input placeholder="first Name"></Input>
-          <Input placeholder="last Name"></Input>
-          <Input placeholder="username"></Input>
-          <Input placeholder="email"></Input>
-          <Input placeholder="password"></Input>
-          <Input placeholder="confirm password"></Input>
-          <Button>Create</Button>
+        <Form>
+          <Input
+            placeholder="username"
+            name="username"
+            onChange={changeHandler}
+          ></Input>
+          <Input
+            placeholder="email"
+            type="email"
+            name="email"
+            onChange={changeHandler}
+          ></Input>
+          <Input
+            name="password"
+            placeholder="password"
+            type="password"
+            onChange={changeHandler}
+          ></Input>
+          <Input
+            name="confirmpassword"
+            placeholder="confirm password"
+            type="password"
+            onChange={changeHandler}
+          ></Input>
+          <Button onClick={submitHandler}>Create</Button>
           <Links>
             <Link to="/login">Already have an account?</Link>
           </Links>

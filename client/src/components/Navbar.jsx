@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 const Container = styled.div`
   height: 60px;
   ${mobile({ height: "50px" })}
@@ -72,30 +73,47 @@ const Menu = styled.div`
 
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
+  const user = useSelector((state) => state.user.currentUser);
   // console.log(quantity);
   return (
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
-          <SearchContainer>
-            <Input placeholder="search" />
-            <SearchIcon style={{ color: "gray", fontSize: "16px" }} />
-          </SearchContainer>
+          {/* <Language>EN</Language> */}
+          
         </Left>
         <Center>
           <Logo>VFY.</Logo>
         </Center>
         <Right>
-          <Link
-            style={{ textDecoration: "none", color: "black" }}
-            to="/register"
-          >
-            <Menu>REGISTER</Menu>
-          </Link>
-          <Link style={{ textDecoration: "none", color: "black" }} to="/login">
-            <Menu>SIGN IN</Menu>
-          </Link>
+          {!user ? (
+            <>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/register"
+              >
+                <Menu>REGISTER</Menu>
+              </Link>
+              <Link
+                style={{ textDecoration: "none", color: "black" }}
+                to="/login"
+              >
+                <Menu>SIGN IN</Menu>
+              </Link>
+            </>
+          ) : (
+            <Link style={{ textDecoration: "none", color: "black" }} to="/">
+              <Menu
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.replace('/')
+                }}
+              >
+                SIGN OUT
+              </Menu>
+            </Link>
+          )}
+
           <Menu>
             <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
               <Badge badgeContent={quantity} color="primary">

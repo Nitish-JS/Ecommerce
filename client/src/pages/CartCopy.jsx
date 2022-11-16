@@ -1,27 +1,30 @@
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
-import { Add, Remove } from "@mui/icons-material";
-import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import StripeCheckout from "react-stripe-checkout";
-import { userRequest } from "../requestMethods";
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import {
-  emptyCart,
-  itemRemoveHandler,
-  itemAddHandler,
-} from "../redux/cartRedux";
+import { Link, useHistory } from "react-router-dom";
 
-const KEY = process.env.REACT_APP_STRIPE;
+import { userRequest } from "../requestMethods";
+import Announcements from "../components/Announcement";
+import Footer from "../components/Footer";
+
+import Navbar from "../components/Navbar";
+
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+
+import { emptyCart } from "../redux/cartRedux";
+
+import { mobile } from "../responsive";
+import { itemAddHandler, itemRemoveHandler, dummy } from "../redux/cartRedux";
+
 const Container = styled.div``;
+
 const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
 `;
+
 const Title = styled.h1`
   font-weight: 300;
   text-align: center;
@@ -43,19 +46,22 @@ const TopButton = styled.button`
     props.type === "filled" ? "black" : "transparent"};
   color: ${(props) => props.type === "filled" && "white"};
 `;
+
 const TopTexts = styled.div`
   ${mobile({ display: "none" })}
 `;
 const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
-  margin: 0 10px;
+  margin: 0px 10px;
 `;
+
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
 `;
+
 const Info = styled.div`
   flex: 3;
 `;
@@ -65,19 +71,23 @@ const Product = styled.div`
   justify-content: space-between;
   ${mobile({ flexDirection: "column" })}
 `;
+
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 const Image = styled.img`
   width: 200px;
+  ${mobile({ width: "80vw" })}
 `;
 
 const Details = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
+
   justify-content: space-around;
 `;
 
@@ -107,11 +117,13 @@ const ProductAmountContainer = styled.div`
   align-items: center;
   margin-bottom: 20px;
 `;
+
 const ProductAmount = styled.div`
   font-size: 24px;
   margin: 5px;
   ${mobile({ margin: "5px 15px" })}
 `;
+
 const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
@@ -121,6 +133,7 @@ const ProductPrice = styled.div`
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
+  height: 1px;
 `;
 
 const Summary = styled.div`
@@ -128,16 +141,13 @@ const Summary = styled.div`
   border: 0.5px solid lightgray;
   border-radius: 10px;
   padding: 20px;
-  height: 50vh;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center; */
-  /* align-items: center; */
+  height: 100%;
 `;
 
 const SummaryTitle = styled.h1`
   font-weight: 200;
 `;
+
 const SummaryItem = styled.div`
   margin: 30px 0px;
   display: flex;
@@ -145,103 +155,179 @@ const SummaryItem = styled.div`
   font-weight: ${(props) => props.type === "total" && "500"};
   font-size: ${(props) => props.type === "total" && "24px"};
 `;
+
 const SummaryItemText = styled.span``;
+
 const SummaryItemPrice = styled.span``;
+
 const Button = styled.button`
   width: 100%;
   padding: 10px;
   background-color: black;
-  text-align: center;
   color: white;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+const Address = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 0.5px solid lightgray;
+  flex-wrap: wrap;
+  padding: 10px;
+`;
+const Input = styled.input`
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid black;
+`;
+const AddressButton = styled.button`
+  width: 50%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
 `;
 
 const Cart = () => {
   const currentUser = useSelector((state) => state.user.currentUser);
-  console.log(KEY);
-  const cart = useSelector((state) => state.cart);
-  const [stripeToken, setStripeToken] = useState(null);
-  const history = useHistory();
-  const dispatch = useDispatch();
+  console.log(currentUser);
 
-  const onToken = (token) => {
-    setStripeToken(token);
-  };
-  const removeHandler = (data) => {
-    dispatch(itemRemoveHandler(data));
-  };
+  const cart = useSelector((state) => state.cart);
+  console.log(cart);
+  const [showCheckOut, setShowCheckOut] = useState(false);
+  const [deliver, setDeliver] = useState({});
+
+  const [orderId, setOrderId] = useState("");
+  const history = useHistory();
+
+  const dispatch = useDispatch();
   const handleClick = () => {
     dispatch(emptyCart());
   };
+
+  console.log(process.env.REACT_APP_RAZORPAY_KEY_ID);
+
+  const initPayment = (data) => {
+    const options = {
+      key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+      amount: 1000,
+      currency: "INR",
+      order_id: data.id,
+      handler: async (response) => {
+        try {
+          const res = await userRequest.post("/checkout/verify", response);
+          console.log(res);
+          history.push("/success", {
+            razorData: res.data,
+            products: cart,
+            orderId: data.id,
+            address: deliver.address,
+            number: deliver.number,
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    };
+    const razorpayObj = new window.Razorpay(options);
+
+    razorpayObj.open();
+  };
+
+  const changeHandler = (event) => {
+    setDeliver((prev) => {
+      return {
+        ...prev,
+        [event.target.name]: event.target.value,
+      };
+    });
+  };
+  const addressHandleClick = async () => {
+    try {
+      const res = await userRequest.put(`users/${currentUser._id}`, deliver);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+    setShowCheckOut((prev) => {
+      return !prev;
+    });
+  };
+  const checkouthandleClick = async () => {
+    try {
+      const res = await userRequest.post("/checkout/payment", {
+        amount: cart.total * 100,
+        currency: "INR",
+      });
+
+      console.log(res.data);
+      setOrderId(res.data.id);
+
+      initPayment(res.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(orderId);
   const addHandler = (data) => {
     dispatch(itemAddHandler(data));
   };
 
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await userRequest.post("/checkout/payments", {
-          tokenId: stripeToken.id,
-          amount: 500,
-        });
-        history.push("/success", {
-          stripeData: res.data,
-          products: cart,
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    stripeToken && makeRequest();
-  }, [stripeToken, cart.total, history]);
+  const removeHandler = (data) => {
+    dispatch(itemRemoveHandler(data));
+  };
   return (
     <Container>
       <Navbar />
-      <Announcement />
+      <Announcements />
       <Wrapper>
-        <Title>Your Cart</Title>
+        <Title>YOUR BAG</Title>
         <Top>
-          <Link style={{ textDecoration: "none", color: "black" }} to="/">
-            <TopButton>Continue Shopping</TopButton>
+          <Link to="/">
+            <TopButton>CONTINUE SHOPPING</TopButton>
           </Link>
+          <TopTexts>
+            <TopText>Shopping Bag({cart.quantity})</TopText>
+            <TopText>Your Wishlist (0)</TopText>
+          </TopTexts>
           <TopButton type="filled" onClick={handleClick}>
             EMPTY CART
           </TopButton>
-          {/* <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
-            <TopButton type="filled">Checkout Now</TopButton>
-          </Link> */}
         </Top>
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product>
+              <Product key={product._id}>
                 <ProductDetail>
                   <Image src={product.img} />
                   <Details>
                     <ProductName>
-                      <b>Product:</b>
-                      {product.title}
+                      <b>Product:</b> {product.title}
                     </ProductName>
                     <ProductId>
-                      <b>ID:</b>
-                      {product._id}
+                      <b>ID:</b> {product._id}
                     </ProductId>
                     <ProductColor color={product.color} />
                     <ProductSize>
-                      <b>Size:</b>
-                      {product.size}
+                      <b>Size:</b> {product.size}
                     </ProductSize>
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add
+                    <AddIcon
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         addHandler(product._id);
                       }}
                     />
                     <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove
+                    <RemoveIcon
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         removeHandler(product._id);
@@ -249,7 +335,7 @@ const Cart = () => {
                     />
                   </ProductAmountContainer>
                   <ProductPrice>
-                    ₹{product.price * product.quantity}
+                    ₹ {product.price * product.quantity}
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -257,35 +343,27 @@ const Cart = () => {
             <Hr />
           </Info>
           <Summary>
-            <SummaryTitle>Order Summary</SummaryTitle>
+            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>₹{cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>₹500</SummaryItemPrice>
+              <SummaryItemPrice>₹ 500</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
-              <SummaryItemText>Discount</SummaryItemText>
-              <SummaryItemPrice>-₹500</SummaryItemPrice>
+              <SummaryItemText>Shipping Discount</SummaryItemText>
+              <SummaryItemPrice>₹ -500</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>₹{cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>₹ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="VFY"
-              image=""
-              billingAddress
-              shippingAddress
-              description={`Your total is $${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
+
+            {showCheckOut && (
+              <Button onClick={checkouthandleClick}>CHECKOUT NOW</Button>
+            )}
             <Button style={{ marginTop: "30px" }}>
               <Link
                 style={{ textDecoration: "none", color: "white" }}
@@ -294,11 +372,31 @@ const Cart = () => {
                 ORDER DETAILS
               </Link>
             </Button>
-
-            {/* <Button>Checkout Now</Button> */}
+            {!showCheckOut && (
+              <Address>
+                <Input
+                  onChange={changeHandler}
+                  name="address"
+                  type="text"
+                  placeholder="Address"
+                  autoComplete="off"
+                ></Input>
+                <Input
+                  onChange={changeHandler}
+                  name="number"
+                  type="tel"
+                  placeholder="Mobile Number"
+                  autoComplete="off"
+                ></Input>
+                <AddressButton onClick={addressHandleClick}>
+                  DELIVER HERE
+                </AddressButton>
+              </Address>
+            )}
           </Summary>
         </Bottom>
       </Wrapper>
+
       <Footer />
     </Container>
   );
