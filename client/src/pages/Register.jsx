@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { userRequest } from "../requestMethods";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import { notifySuccess, notifyFailure, notifyInfo } from "../components/alert";
 const Container = styled.div`
   width: 100vw;
@@ -14,8 +12,6 @@ const Container = styled.div`
     rgba(255, 255, 255, 0.5),
     rgba(255, 255, 255, 0.5)
   );
-  /* url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
-      center; */
   background-size: cover;
   display: flex;
   align-items: center;

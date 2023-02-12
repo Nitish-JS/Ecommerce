@@ -1,5 +1,4 @@
 import Cart from "./pages/CartCopy";
-// import Cart from "./pages/Cart";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import ProductList from "./pages/ProductList";

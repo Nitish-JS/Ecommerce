@@ -1,18 +1,9 @@
-// const router = require("express").Router();
-// const KEY=process.env.STRIPE_KEY;
-// const stripe = require("stripe")(KEY);
-
-// module.exports = router;
 const dotenv = require("dotenv");
 dotenv.config();
 
 const router = require("express").Router();
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
-
-// console.log(process.env.KEY_SECRET);
-
-// process.env.RAZORPAY_SECRET_KEY
 const instance = new Razorpay({
   key_id: process.env.KEY_ID,
   key_secret: process.env.KEY_SECRET,

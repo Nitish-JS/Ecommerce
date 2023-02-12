@@ -19,8 +19,8 @@ const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:8000/api/product?category=${cat}`
-            : "http://localhost:8000/api/product"
+            ? `https://ecommerce-api-v1.onrender.com/api/product?category=${cat}`
+            : "https://ecommerce-api-v1.onrender.com/api/product"
         );
         setProducts(res.data);
       } catch (err) {}
@@ -38,21 +38,6 @@ const Products = ({ cat, filters, sort }) => {
         )
       );
   }, [products, cat, filters]);
-  // useEffect(() => {
-  //   if (sort === "newest") {
-  //     setFilteredProducts((prev) =>
-  //       [...prev].sort((a, b) => a.createdAt - b.createdAt)
-  //     );
-  //   } else if (sort === "asc") {
-  //     setFilteredProducts((prev) =>
-  //       [...prev].sort((a, b) => a.price - b.price)
-  //     );
-  //   } else {
-  //     setFilteredProducts((prev) =>
-  //       [...prev].sort((a, b) => b.price - a.price)
-  //     );
-  //   }
-  // }, [sort]);
   useEffect(() => {
     if (sort === "newest") {
       setFilteredProducts((prev) => {
