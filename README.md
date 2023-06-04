@@ -1,5 +1,5 @@
 # VFY Store
-This is an e-commerce website built with React, Redux, Node.js, MongoDB, and Mongoose. The website has three components - client, server, and admin. The client component is the main e-commerce website where customers can browse, search, purchase items and make payment through Razorpay gateway. The server component is responsible for handling API requests from the client and authenticating users using JWT tokens. The admin component provides visualizations of customer data and allows the site owner to add or delete items.
+This is an e-commerce website built with React, Redux, Node.js, MongoDB, and Mongoose. The web application has three components - client, server, and admin. The client component is the main e-commerce web app where customers can browse, search, purchase items and make payment through Razorpay gateway. The server component is responsible for handling API requests from the client and authenticating users using JWT tokens. The admin component provides visualizations of customer data and allows the site owner to add or delete items.
 
 ## Frontend Features
 <ul>
