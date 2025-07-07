@@ -6,6 +6,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useDarkMode } from "../darkModeContext";
 
 const Container = styled.div`
   height: 60px;
@@ -71,9 +72,24 @@ const Menu = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text};
+`;
+
+const ThemeToggle = styled.button`
+  margin-left: 25px;
+  background: none;
+  border: 1px solid ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.text};
+  cursor: pointer;
+  ${mobile({ fontSize: "12px", marginLeft: "10px" })}
+`;
+
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
+  const { toggle } = useDarkMode();
   // console.log(quantity);
   return (
     <Container>
@@ -88,21 +104,15 @@ const Navbar = () => {
         <Right>
           {!user ? (
             <>
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/register"
-              >
+              <StyledLink to="/register">
                 <Menu>REGISTER</Menu>
-              </Link>
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/login"
-              >
+              </StyledLink>
+              <StyledLink to="/login">
                 <Menu>SIGN IN</Menu>
-              </Link>
+              </StyledLink>
             </>
           ) : (
-            <Link style={{ textDecoration: "none", color: "black" }} to="/">
+            <StyledLink to="/">
               <Menu
                 onClick={() => {
                   localStorage.clear();
@@ -111,16 +121,17 @@ const Navbar = () => {
               >
                 SIGN OUT
               </Menu>
-            </Link>
+            </StyledLink>
           )}
 
           <Menu>
-            <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
+            <StyledLink to="/cart">
               <Badge badgeContent={quantity} color="primary">
                 <ShoppingCartIcon />
               </Badge>
-            </Link>
+            </StyledLink>
           </Menu>
+          <ThemeToggle onClick={toggle}>Toggle Theme</ThemeToggle>
         </Right>
       </Wrapper>
     </Container>
