@@ -4,6 +4,11 @@ import { useState } from "react";
 import { sliderItems } from "../data";
 import { Link } from "react-router-dom";
 import { mobile } from "../responsive";
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text};
+`;
 const Container = styled.div`
   width: 100%;
   height: 80vh;
@@ -102,12 +107,9 @@ const Slider = () => {
               <InfoContainer>
                 <Title>{item.title}</Title>
                 <Description>{item.desc}</Description>
-                <Link
-                  style={{ textDecoration: "none", color: "black" }}
-                  to="/products/men"
-                >
+                <StyledLink to="/products/men">
                   <Button>Shop Now</Button>
-                </Link>
+                </StyledLink>
               </InfoContainer>
             </Slide>
           );

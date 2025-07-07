@@ -7,7 +7,10 @@ import Navbar from "../components/Navbar";
 import Products from "../components/Products";
 import { mobile } from "../responsive";
 
-const Container = styled.div``;
+const Container = styled.div`
+  background: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
+`;
 const Title = styled.h1`
   margin: 20px;
 `;

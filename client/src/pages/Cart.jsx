@@ -16,8 +16,16 @@ import {
   itemAddHandler,
 } from "../redux/cartRedux";
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text};
+`;
+
 const KEY = process.env.REACT_APP_STRIPE;
-const Container = styled.div``;
+const Container = styled.div`
+  background: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
+`;
 const Wrapper = styled.div`
   padding: 20px;
   ${mobile({ padding: "10px" })}
@@ -200,9 +208,9 @@ const Cart = () => {
       <Wrapper>
         <Title>Your Cart</Title>
         <Top>
-          <Link style={{ textDecoration: "none", color: "black" }} to="/">
+          <StyledLink to="/">
             <TopButton>Continue Shopping</TopButton>
-          </Link>
+          </StyledLink>
           <TopButton type="filled" onClick={handleClick}>
             EMPTY CART
           </TopButton>
@@ -287,12 +295,9 @@ const Cart = () => {
               <Button>CHECKOUT NOW</Button>
             </StripeCheckout>
             <Button style={{ marginTop: "30px" }}>
-              <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to={`/orderdetails/${currentUser._id}`}
-              >
+              <StyledLink to={`/orderdetails/${currentUser._id}`}>
                 ORDER DETAILS
-              </Link>
+              </StyledLink>
             </Button>
 
             {/* <Button>Checkout Now</Button> */}

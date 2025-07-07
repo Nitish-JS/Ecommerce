@@ -9,15 +9,12 @@ import { notifySuccess, notifyFailure, notifyInfo } from "../components/alert";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-      center;
+  background: ${({ theme }) => theme.bg};
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Wrapper = styled.div`

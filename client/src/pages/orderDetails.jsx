@@ -14,6 +14,11 @@ import { notifyInfo } from "../components/alert";
 import { addOrder, setStatus } from "../redux/orderRedux";
 
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text};
+`;
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -21,6 +26,8 @@ const Container = styled.div`
   height: 100vh;
   flex-direction: column;
   overflow: auto;
+  background: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
 `;
 const Product = styled.div`
   display: flex;
@@ -269,9 +276,7 @@ const OrderDetails = () => {
           <Title>No Orders</Title>
           <RemoveShoppingCartIcon style={{ fontSize: "100px", color: "red" }} />
           <HomeButton>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/">
-              Back To Home Page
-            </Link>
+            <StyledLink to="/">Back To Home Page</StyledLink>
           </HomeButton>
         </NoOrderDiv>
       )}

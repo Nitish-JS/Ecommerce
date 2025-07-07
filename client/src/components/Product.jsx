@@ -63,7 +63,7 @@ const Icon = styled.div`
   }
 `;
 const Price = styled.p`
-  color: black;
+  color: ${({ theme }) => theme.text};
   text-align: center;
 `;
 const Product = ({ item }) => {

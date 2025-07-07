@@ -10,7 +10,10 @@ import { publicRequest } from "../requestMethods";
 import { useState, useEffect } from "react";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-const Container = styled.div``;
+const Container = styled.div`
+  background: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
+`;
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;

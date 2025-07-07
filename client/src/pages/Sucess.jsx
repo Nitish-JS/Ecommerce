@@ -17,6 +17,21 @@ const Container = styled.div`
   justify-content: space-around;
   flex-direction: column;
   height: 100vh;
+  background: ${({ theme }) => theme.bg};
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.text};
+`;
+
+const OrderButton = styled.button`
+  padding: 10px;
+  margin-top: 80px;
+  background-color: black;
+  color: ${({ theme }) => theme.text};
+  cursor: pointer;
 `;
 const Title = styled.div`
   display: flex;
@@ -155,19 +170,9 @@ const Success = () => {
             </div>
           </Div>
         )}
-        <Link to={`/orderdetails/${orderedItems._id}`}>
-          <button
-            style={{
-              padding: 10,
-              marginTop: 80,
-              backgroundColor: "black",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            Order Details
-          </button>
-        </Link>
+        <StyledLink to={`/orderdetails/${orderedItems._id}`}>
+          <OrderButton>Order Details</OrderButton>
+        </StyledLink>
       </Left>
       {/* <Right>
         <Top></Top>

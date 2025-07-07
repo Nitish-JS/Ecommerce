@@ -4,6 +4,6 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  bg: "#121212",
+  bg: "linear-gradient(180deg, #0f2027, #203a43, #2c5364)",
   text: "#ffffff",
 };
