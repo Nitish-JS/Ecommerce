@@ -28,6 +28,9 @@ This is an e-commerce website built with React, Redux, Node.js, MongoDB, and Mon
 </ul>
 
 ## Installation
+Ensure you have Node.js 16 or later installed. If you use Node 17 or newer, set
+`NODE_OPTIONS=--openssl-legacy-provider` when running the development servers to
+avoid OpenSSL issues.
 <ol>
 <li>Clone the repository: git clone https://github.com/Nitish-JS/Ecommerce.git</li>
 <li>Navigate to the project directory: cd Ecommerce</li>
