@@ -50,7 +50,7 @@ const Slide = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  background-color: #${(props) => props.bg};
+  background: ${({ theme, bg }) => theme.sliderBg || `#${bg}`};
 `;
 const ImageContainer = styled.div`
   height: 80%;
@@ -75,7 +75,7 @@ const Description = styled.p`
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 3px;
-  color: #333;
+  color: ${({ theme }) => theme.text};
 `;
 const Button = styled.button`
   padding: 10px;

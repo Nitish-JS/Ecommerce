@@ -2,10 +2,12 @@ export const lightTheme = {
   bg: "#ffffff",
   text: "#000000",
   gridBg: "#f5fbfd",
+  sliderBg: null,
 };
 
 export const darkTheme = {
   bg: "linear-gradient(180deg, #0f2027, #203a43, #2c5364)",
   text: "#ffffff",
   gridBg: "rgba(255, 255, 255, 0.1)",
+  sliderBg: "rgba(0, 0, 0, 0.5)",
 };
