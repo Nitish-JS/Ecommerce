@@ -67,6 +67,8 @@ const InfoContainer = styled.div`
 
 const Title = styled.h1`
   font-size: 70px;
+  font-family: 'Courier New', cursive;
+  color: #ff6347;
 `;
 const Description = styled.p`
   margin: 50px 0;

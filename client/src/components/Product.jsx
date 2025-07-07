@@ -28,7 +28,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #f5fbfd;
+  background-color: ${({ theme }) => theme.gridBg};
   position: relative;
   &:hover ${Info} {
     opacity: 1;
