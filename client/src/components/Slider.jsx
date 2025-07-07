@@ -36,6 +36,7 @@ const Arrow = styled.div`
   cursor: pointer;
   opacity: 0.75;
   z-index: 2;
+  color: black;
 `;
 
 const Wrapper = styled.div`
@@ -82,6 +83,8 @@ const Button = styled.button`
   font-size: 20px;
   background-color: transparent;
   cursor: pointer;
+  color: ${({ theme }) => theme.text};
+  border: 1px solid ${({ theme }) => theme.text};
 `;
 
 const Slider = () => {
