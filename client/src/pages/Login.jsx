@@ -9,11 +9,7 @@ import { notifySuccess, notifyFailure, notifyInfo } from "../components/alert";
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
-    ),
-      center;
+  background: ${(props) => props.theme.loginBg};
   background-size: cover;
   display: flex;
   align-items: center;
@@ -23,7 +19,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
   width: 25%;
   padding: 20px;
-  background-color: white;
+  background-color: ${(props) => props.theme.cardBg};
   ${mobile({ width: "75%" })}
 `;
 
