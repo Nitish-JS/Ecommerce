@@ -5,7 +5,6 @@ const {
   verifyTokenAndAdmin,
 } = require("./verifyToken");
 const Product = require("../models/Product");
-const { json } = require("express");
 
 // CREATE PRODUCT
 router.post("/", verifyTokenAndAdmin, async (req, res) => {
@@ -28,8 +27,9 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
       },
       { new: true }
     );
+    res.status(200).json(updatedProduct);
   } catch (error) {
-    res.status(500), json(error);
+    res.status(500).json(error);
   }
 });
 //DELETE
