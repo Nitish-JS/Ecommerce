@@ -5,7 +5,7 @@ This is an e-commerce website built with React, Redux, Node.js, MongoDB, and Mon
 <ul>
 <li>The frontend of the application is built using React, and Redux is used for state management.
 <li>The frontend is designed to provide a user-friendly experience for customers, with a responsive UI that works well on both desktop and mobile devices.</li>
-<li>The website is integrated with a payment gateway using RazorPay API, allowing customers to complete transactions securely and efficiently.</li>
+<li>The website is integrated with a payment gateway using Razorpay API, allowing customers to complete transactions securely and efficiently.</li>
 <li>The frontend also uses JWT authentication to ensure secure user login. This helps to protect user data and prevent unauthorized access to the site.</li>
 </li>
 </ul>
@@ -40,7 +40,7 @@ avoid OpenSSL issues.
 <li>Navigate to the server directory: cd server</li>
 <li>Install dependencies: npm install</li>
 <li>Start the server: npm start</li>
-<li>Navigate to the admim directory: cd admin</li>
+<li>Navigate to the admin directory: cd admin</li>
 <li>Install dependencies: npm install</li>
 <li>Start the server: npm start</li>
 <li> Configure env file</li>
