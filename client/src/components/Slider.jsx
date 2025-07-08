@@ -45,7 +45,10 @@ const Slide = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  background-color: #${(props) => props.bg};
+  background: ${(props) =>
+    props.theme.mode === "dark"
+      ? `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), #${props.bg}`
+      : `#${props.bg}`};
 `;
 const ImageContainer = styled.div`
   height: 80%;
@@ -62,17 +65,20 @@ const InfoContainer = styled.div`
 
 const Title = styled.h1`
   font-size: 70px;
+  color: ${(props) => props.theme.text};
 `;
 const Description = styled.p`
   margin: 50px 0;
   font-size: 20px;
   font-weight: 500;
   letter-spacing: 3px;
+  color: ${(props) => props.theme.text};
 `;
 const Button = styled.button`
   padding: 10px;
   font-size: 20px;
   background-color: transparent;
+  color: ${(props) => props.theme.text};
   cursor: pointer;
 `;
 
@@ -103,7 +109,7 @@ const Slider = () => {
                 <Title>{item.title}</Title>
                 <Description>{item.desc}</Description>
                 <Link
-                  style={{ textDecoration: "none", color: "black" }}
+                  style={{ textDecoration: "none", color: "inherit" }}
                   to="/products/men"
                 >
                   <Button>Shop Now</Button>

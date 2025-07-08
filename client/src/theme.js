@@ -1,4 +1,5 @@
 export const lightTheme = {
+  mode: "light",
   body: "#ffffff",
   text: "#000000",
   elementBg: "#f5fbfd",
@@ -8,7 +9,8 @@ export const lightTheme = {
 };
 
 export const darkTheme = {
-  body: "#1e1e1e",
+  mode: "dark",
+  body: "linear-gradient(#2a2a2a, #1e1e1e)",
   text: "#f5f5f5",
   elementBg: "#2a2a2a",
   cardBg: "#333333",
