@@ -40,7 +40,7 @@ avoid OpenSSL issues.
 <li>Navigate to the server directory: cd server</li>
 <li>Install dependencies: npm install</li>
 <li>Start the server: npm start</li>
-<li>Navigate to the admim directory: cd admin</li>
+<li>Navigate to the admin directory: cd admin</li>
 <li>Install dependencies: npm install</li>
 <li>Start the server: npm start</li>
 <li> Configure env file</li>
