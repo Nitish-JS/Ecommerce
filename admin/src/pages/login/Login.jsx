@@ -12,7 +12,7 @@ const Login = () => {
     if (email !== "" && password !== "") {
       login(dispatch, { email, password });
     } else {
-      alert("Enter Valid Credentails");
+      alert("Enter valid credentials");
     }
   };
 

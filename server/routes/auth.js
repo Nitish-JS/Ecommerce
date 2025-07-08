@@ -27,7 +27,7 @@ router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user === null) {
-      return res.status(401).json("Invalid credentails!");
+      return res.status(401).json("Invalid credentials!");
     }
 
     const hashedPassword = CryptoJS.AES.decrypt(user.password, process.env.KEY);
