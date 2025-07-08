@@ -28,7 +28,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #f5fbfd;
+  background-color: ${(props) => props.theme.elementBg};
   position: relative;
   &:hover ${Info} {
     opacity: 1;
@@ -63,7 +63,7 @@ const Icon = styled.div`
   }
 `;
 const Price = styled.p`
-  color: black;
+  color: ${(props) => props.theme.text};
   text-align: center;
 `;
 const Product = ({ item }) => {

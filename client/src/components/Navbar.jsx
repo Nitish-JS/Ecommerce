@@ -6,6 +6,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useContext } from "react";
+import { ThemeContext } from "../themeContext";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 const Container = styled.div`
   height: 60px;
@@ -71,10 +75,18 @@ const Menu = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const ThemeToggle = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 20px;
+  color: ${(props) => props.theme.text};
+`;
+
 const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
-  // console.log(quantity);
+  const { mode, toggleTheme } = useContext(ThemeContext);
   return (
     <Container>
       <Wrapper>
@@ -88,25 +100,19 @@ const Navbar = () => {
         <Right>
           {!user ? (
             <>
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/register"
-              >
+              <Link style={{ textDecoration: "none", color: "inherit" }} to="/register">
                 <Menu>REGISTER</Menu>
               </Link>
-              <Link
-                style={{ textDecoration: "none", color: "black" }}
-                to="/login"
-              >
+              <Link style={{ textDecoration: "none", color: "inherit" }} to="/login">
                 <Menu>SIGN IN</Menu>
               </Link>
             </>
           ) : (
-            <Link style={{ textDecoration: "none", color: "black" }} to="/">
+            <Link style={{ textDecoration: "none", color: "inherit" }} to="/">
               <Menu
                 onClick={() => {
                   localStorage.clear();
-                  window.location.replace('/')
+                  window.location.replace("/");
                 }}
               >
                 SIGN OUT
@@ -114,8 +120,12 @@ const Navbar = () => {
             </Link>
           )}
 
+          <ThemeToggle onClick={toggleTheme}>
+            {mode === "light" ? <DarkModeIcon /> : <LightModeIcon />}
+          </ThemeToggle>
+
           <Menu>
-            <Link style={{ textDecoration: "none", color: "black" }} to="/cart">
+            <Link style={{ textDecoration: "none", color: "inherit" }} to="/cart">
               <Badge badgeContent={quantity} color="primary">
                 <ShoppingCartIcon />
               </Badge>
